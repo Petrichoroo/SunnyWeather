@@ -2,6 +2,7 @@ package com.sunnyweather.android.ui.place
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sunnyweather.android.MainActivity
 import com.sunnyweather.android.R
 import com.sunnyweather.android.ui.weather.WeatherActivity
 import kotlinx.android.synthetic.main.fragment_place.*
@@ -35,6 +37,19 @@ class PlaceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        /**只有当PlaceFragment被嵌入MainActivity中，并且之前已经存在选中的城市
+         * 此时才会直接跳转到WeatherActivity，这样就可以解决无限循环跳转的问题*/
+        if (activity is MainActivity && viewModel.isPlaceSaved()) {
+            val place = viewModel.getSavedPlace()
+            val intent = Intent(context, WeatherActivity::class.java).apply {
+                putExtra("location_lng", place.location.lng)
+                putExtra("location_lat", place.location.lat)
+                putExtra("place_name", place.name)
+            }
+            startActivity(intent)
+            activity?.finish()
+            return
+        }
         val layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
         //设置适配器，使用PlaceViewModel中的placeList集合作为数据源
@@ -66,21 +81,22 @@ class PlaceFragment : Fragment() {
                 it.exceptionOrNull()?.printStackTrace() //打印具体的异常原因
             }
         })
+
         /**
          * 若当前已有存储的城市数据，那么就获取已存储的数据并解析成Place对象
          * 然后使用它的经纬度坐标和城市名直接跳转并传递给WeatherActivity
-         * 这样用户就不需要每次都重新搜索并选择城市了。*/
-        if (viewModel.isPlaceSaved()) {
-            val place = viewModel.getSavedPlace()
-            val intent = Intent(context, WeatherActivity::class.java).apply {
-                putExtra("location_lng", place.location.lng)
-                putExtra("location_lat", place.location.lat)
-                putExtra("place_name", place.name)
-            }
-            startActivity(intent)
-            activity?.finish()
-            return
-        }
-
+         * 这样用户就不需要每次都重新搜索并选择城市了。
+         * 将PlaceFragment嵌入WeatherActivity中之后，下面这段逻辑要删掉，不然造成无限循环跳转的情况*/
+//        if (viewModel.isPlaceSaved()) {
+//            val place = viewModel.getSavedPlace()
+//            val intent = Intent(context, WeatherActivity::class.java).apply {
+//                putExtra("location_lng", place.location.lng)
+//                putExtra("location_lat", place.location.lat)
+//                putExtra("place_name", place.name)
+//            }
+//            startActivity(intent)
+//            activity?.finish()
+//            return
+//        }
     }
 }

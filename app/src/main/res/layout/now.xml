@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--当前天气信息的布局
+<?xml version="1.0" encoding="utf-8"?><!--当前天气信息的布局
     主要分为上下两个布局：
     上半部分是头布局，里面只放置了一个TextView，用于显示城市名
     下半部分是当前天气信息的布局，里面放置了几个TextView，
@@ -16,6 +15,14 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:fitsSystemWindows="true">
+
+        <Button
+            android:id="@+id/navBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/ic_home" />
 
         <TextView
             android:id="@+id/placeName"
