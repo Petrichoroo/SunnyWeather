@@ -2,6 +2,7 @@ package com.sunnyweather.android.logic.network
 
 import com.sunnyweather.android.SunnyWeatherApplication
 import com.sunnyweather.android.logic.model.PlaceResponse
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -16,5 +17,5 @@ interface PlaceService {
      * 方法的返回值必须声明成Retrofit中内置的Call类型，并通过泛型来指定服务器响应的数据应该转换成什么对象*/
 
     @GET("v2/place?token=${SunnyWeatherApplication.TOKEN}&lang=zh_CN")  //相对路径
-    fun searchPlaces(@Query("query") query: String): retrofit2.Call<PlaceResponse>
+    fun searchPlaces(@Query("query") query: String): Call<PlaceResponse>
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--ScrollView就可以通过滚动的方式查看屏幕以外的内容
+    其内部只允许存在一个直接子布局
+    android:scrollbars-设置滚动条显示
+    android:overScrollMode-滑动到超出内容边缘的时候的行为-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/weatherLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:overScrollMode="never"
+    android:scrollbars="none"
+    android:visibility="invisible">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/now" />
+
+        <include layout="@layout/forecast" />
+
+        <include layout="@layout/life_index" />
+    </LinearLayout>
+</ScrollView>

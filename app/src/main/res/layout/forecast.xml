@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--未来几天天气信息的布局
+    MaterialCardView来实现卡片式布局的背景效果
+    显示未来几天天气信息的布局是要根据服务器返回的数据在代码中动态添加的-->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginRight="15dp"
+    app:cardCornerRadius="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/forecast"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:id="@+id/forecastLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

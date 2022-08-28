@@ -12,8 +12,17 @@ import kotlin.coroutines.suspendCoroutine
  * 定义一个统一的网络数据源访问入口，对所有网络请求的API进行封装*/
 
 object SunnyWeatherNetwork {
-    //创建了一个PlaceService接口的动态代理对象，然后可以通过它随意调用接口中定义的所有方法
+    //创建一个动态代理对象，然后可以通过它随意调用接口中定义的所有方法
     private val placeService = ServiceCreator.create<PlaceService>()
+    private val weatherService = ServiceCreator.create(WeatherService::class.java)
+
+    //未来的天气信息
+    suspend fun getDailyWeather(lng: String, lat: String) =
+        weatherService.getDailyWeather(lng, lat).await()
+
+    //实时天气
+    suspend fun getRealtimeWeather(lng: String, lat: String) =
+        weatherService.getRealtimeWeather(lng, lat).await()
 
     /**发起搜索城市数据请求
      * 当外部调用searchPlaces()函数时，Retrofit就会立即发起网络请求，同时当前的协程也会被阻塞住
@@ -21,7 +30,8 @@ object SunnyWeatherNetwork {
      * searchPlaces()函数在得到await()函数的返回值后会将该数据再返回到上一层
      */
 
-    suspend fun searchPlaces(query: String) = placeService.searchPlaces(query).await()
+    suspend fun searchPlaces(query: String) =
+        placeService.searchPlaces(query).await()
 
     /**
      * 借助suspendCoroutine函数简化传统回调机制的写法：
