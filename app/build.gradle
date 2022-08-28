@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -34,7 +35,7 @@ android {
 
 dependencies {
 
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"    //使用observe()方法的语法扩展
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"   //下拉刷新
     //Retrofit网络库
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
